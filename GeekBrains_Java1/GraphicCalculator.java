@@ -294,6 +294,11 @@ class GraphicCalculator extends JFrame {
         }
 
         double currentValue = Double.parseDouble(screenBuffer[MAIN_SCREEN].toString());
+
+        if(currentValue == 0.0d) {
+            return;
+        }
+
         currentValue *= -1.0d;
 
         if(currentValue < 0.0d) {
@@ -309,13 +314,19 @@ class GraphicCalculator extends JFrame {
     void squareRootHandler() {
         if(lastOperation > 0) {
             resultHandler();
-            showResult(Math.sqrt(Double.parseDouble(outputArea[MAIN_SCREEN].getText())));
+            String result = outputArea[MAIN_SCREEN].getText();
+
+            if(!isNumeric(result)) {
+                return;
+            }
+
+            showResult(Math.sqrt(Double.parseDouble(result)));
             return;
         } else {
             switch(getScreenSymbolsNum(MAIN_SCREEN)) {
             case 0:
                 showResult(Math.sqrt(Double.parseDouble(outputArea[MAIN_SCREEN].getText())));
-                break;
+                return;
             case 1:
                 if(screenBuffer[MAIN_SCREEN].charAt(0) == '0') {
                     return;
@@ -327,7 +338,7 @@ class GraphicCalculator extends JFrame {
                 }
                 break;
             }
-            showResult(getScreenSymbolsNum(MAIN_SCREEN) > 0 ? Math.sqrt(Double.parseDouble(screenBuffer[MAIN_SCREEN].toString())) : Math.sqrt(Double.parseDouble(outputArea[MAIN_SCREEN].getText())));   
+            showResult(Math.sqrt(Double.parseDouble(screenBuffer[MAIN_SCREEN].toString())));   
         }
     }
 
@@ -551,5 +562,15 @@ class GraphicCalculator extends JFrame {
 
     boolean isInteger(double num) {
         return num % 1 == 0;
+    }
+    
+    
+    static boolean isNumeric(String str) {
+        try {
+            double d = Double.parseDouble(str);  
+        } catch(NumberFormatException nfe) {  
+            return false;  
+        }  
+        return true;  
     }
 }
