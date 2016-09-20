@@ -1,6 +1,6 @@
 /**
  * @author Kitaev Boris
- * @version 0.5 dated 17 Sep 2016
+ * @version 1.0 dated 21 Sep 2016
  */
 
 import java.awt.*;
